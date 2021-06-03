@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { ITodoItem } from './types/types';
+import Navbar from './components/Navbar';
+import TodoItemsList from './components/TodoItemsList';
+import axios from 'axios';
+import 'antd/dist/antd.css';
 
 function App() {
+  const [items, setItems] = useState<ITodoItem[]>([]);
+
+  useEffect(() => {
+    fetchItems()
+  }, []);
+
+  async function fetchItems() {
+    try {
+      const response = await axios.get<ITodoItem[]>('https://localhost:44380/api/todo/tasks');
+      setItems(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <TodoItemsList items={items} />
     </div>
   );
 }
