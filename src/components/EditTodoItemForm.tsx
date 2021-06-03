@@ -74,7 +74,7 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
     return (
         <div>
             <Form form={form} onFinish={e => {onEditClick(e)}}>
-                <Form.Item name="assignee" label="Assignee" initialValue>
+                <Form.Item name="assignee" label="Assignee">
                     <Input onChange={e => setAssignee(e.target.value)} placeholder={item.assignee} />
                 </Form.Item>
                 <Form.Item name="text" label="Text" required={true}>
