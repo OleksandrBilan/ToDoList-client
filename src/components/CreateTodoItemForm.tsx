@@ -1,10 +1,9 @@
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import axios from 'axios';
-import React, { useState, useEffect, RefObject } from 'react';
+import React, { useState } from 'react';
 import { backEndUrl } from '../App';
 import { ITodoItem } from '../types/types'
 import { Int } from '../types/types';
-// import TodoItemsList from './TodoItemsList';
 
 const { Option } = Select;
 
@@ -15,12 +14,6 @@ const CreateTodoItemForm = () => {
     const [taskText, setText] = useState<string>();
     const [deadlineString, setDeadline] = useState<string>();
     const [taskState, setTaskState] = useState<Int>();
-
-    // const [todoListRef, setTodoListRef] = useState<RefObject<typeof TodoItemsList>>();
-
-    // useEffect(() => {
-    //   setTodoListRef(React.createRef());
-    // }, []);
 
     const onCreateClick = (e: Event) => {
         try {
@@ -40,15 +33,11 @@ const CreateTodoItemForm = () => {
         }
     }
 
-    const onSelectChange = (str: string | undefined) => {
-        if (str === undefined) {
+    const onSelectChange = (val: any | undefined) => {
+        if (val === undefined) {
             setTaskState(0 as Int);
         } else {
-            switch(str) {
-                case "New": setTaskState(0 as Int); break;
-                case "Doing": setTaskState(1 as Int); break;
-                case "Done": setTaskState(2 as Int); break;
-            }
+            setTaskState(val as Int);
         }
     }
 
@@ -70,10 +59,10 @@ const CreateTodoItemForm = () => {
                     <Input onChange={e => setText(e.target.value)} />
                 </Form.Item>
                 <Form.Item name="state" label="State" required={true}>
-                    <Select placeholder="New" onChange={e => onSelectChange(e?.toString())}>
-                        <Option value="0">New</Option>
-                        <Option value="1">Doing</Option>
-                        <Option value="2">Done</Option>
+                    <Select placeholder="New" onSelect={onSelectChange}>
+                        <Option value="0" key="0">New</Option>
+                        <Option value="1" key="1">Doing</Option>
+                        <Option value="2" key="2">Done</Option>
                     </Select>
                 </Form.Item>
                 <Form.Item name="deadline" label="Deadline" required={true}>

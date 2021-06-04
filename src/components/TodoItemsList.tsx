@@ -9,7 +9,7 @@ const TodoItemsList = () => {
 
     useEffect(() => {
       fetchItems()
-    }, []);
+    }, [items]);
 
     async function fetchItems() {
         try {

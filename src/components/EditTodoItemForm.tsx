@@ -45,15 +45,11 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
         }
     }
 
-    const onSelectChange = (str: string | undefined) => {
-        if (str === undefined) {
+    const onSelectChange = (val: any | undefined) => {
+        if (val === undefined) {
             setTaskState(0 as Int);
         } else {
-            switch(str) {
-                case "New": setTaskState(0 as Int); break;
-                case "Doing": setTaskState(1 as Int); break;
-                case "Done": setTaskState(2 as Int); break;
-            }
+            setTaskState(val as Int);
         }
     }
 
