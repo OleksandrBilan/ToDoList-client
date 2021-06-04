@@ -17,9 +17,14 @@
 }
 
 .buttons {
+    float: right;
     display: inline-flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+}
+
+.delete-btn {
+    margin-left: 5%;
 }
 
 .assignee-span {
