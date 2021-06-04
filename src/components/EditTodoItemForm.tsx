@@ -3,6 +3,7 @@ import { Int } from '../types/types';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { ITodoItem } from '../types/types'
+import { backEndUrl } from '../App';
 
 const { Option } = Select;
 
@@ -35,9 +36,10 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
                 deadline: deadlineString === undefined ? "not set" : deadlineString
             }
             const editTodoItem = axios.put(
-                'https://localhost:44380/api/todo/tasks/' + item.id,
+                backEndUrl + 'api/todo/tasks/' + item.id,
                 editedItem
             );
+            console.log(editTodoItem);
         } catch (e) {
             console.log(e);
         }
@@ -91,7 +93,7 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
                     <DatePicker onChange={e => onDeadlineChange(e?.format("DD-MM-YYYY"))}/>
                 </Form.Item>
                 <Form.Item>
-                    <Button type='primary' htmlType='submit'>Edit</Button>
+                    <Button type='primary' htmlType='submit' className='edit-item-btn'>Edit</Button>
                 </Form.Item>
             </Form>
         </div>

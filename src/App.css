@@ -7,24 +7,41 @@
 }
 
 .todo-item-div {
-    border: 1px solid black;
-    padding: 0.7%;
-    margin-top: 0.5%;
+    margin-top: 1%;
 }
 
 .state-span {
     float: right;
     font-weight: bold;
+    width: 100%;
 }
 
-.edit-btn {
-    float: right;
+.buttons {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .assignee-span {
     font-weight: bold;
 }
 
+.deadline-span {
+    font-style: italic;
+}
+
 .text-div {
     text-align: center;
+    overflow: hidden;
+    font-size: 1.2rem;
+}
+
+.create-item-btn {
+    width: 50%; 
+    margin-left: 25%;
+}
+
+.edit-item-btn {
+    width: 50%;
+    margin-left: 25%;
 }

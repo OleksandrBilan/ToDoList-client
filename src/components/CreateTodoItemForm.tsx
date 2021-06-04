@@ -1,8 +1,10 @@
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect, RefObject } from 'react';
+import { backEndUrl } from '../App';
 import { ITodoItem } from '../types/types'
 import { Int } from '../types/types';
+import TodoItemsList from './TodoItemsList';
 
 const { Option } = Select;
 
@@ -14,6 +16,12 @@ const CreateTodoItemForm = () => {
     const [deadlineString, setDeadline] = useState<string>();
     const [taskState, setTaskState] = useState<Int>();
 
+    // const [todoListRef, setTodoListRef] = useState<RefObject<typeof TodoItemsList>>();
+
+    // useEffect(() => {
+    //   setTodoListRef(React.createRef());
+    // }, []);
+
     const onCreateClick = (e: Event) => {
         try {
             const item: Omit<ITodoItem, "id"> = {
@@ -23,9 +31,10 @@ const CreateTodoItemForm = () => {
                 deadline: deadlineString === undefined ? "not set" : deadlineString
             }
             const saveTodoItem = axios.post(
-                'https://localhost:44380/api/todo/tasks',
+                backEndUrl + 'api/todo/tasks',
                 item
             );
+            console.log(saveTodoItem);
         } catch (e) {
             console.log(e);
         }
@@ -70,8 +79,8 @@ const CreateTodoItemForm = () => {
                 <Form.Item name="deadline" label="Deadline" required={true}>
                     <DatePicker onChange={e => onDeadlineChange(e?.format("DD-MM-YYYY"))} />
                 </Form.Item>
-                <Form.Item>
-                    <Button type='primary' htmlType='submit'>Create</Button>
+                <Form.Item style={{width: '100%'}}>
+                    <Button type='primary' htmlType='submit' className='create-item-btn'>Create</Button>
                 </Form.Item>
             </Form>
         </div>
