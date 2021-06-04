@@ -5,6 +5,7 @@ import { Button, Modal, Card } from 'antd';
 import EditTodoItemForm  from './EditTodoItemForm';
 import axios from 'axios';
 import { backEndUrl } from '../App';
+import { stateNumToString } from './EditTodoItemForm';
 
 interface TodoItemProps {
     todoItem: ITodoItem
@@ -14,16 +15,13 @@ const { confirm } = Modal;
 
 const TodoItem: React.FC<TodoItemProps> = ({todoItem}) => {
     const [visible, setVisible] = React.useState(false);
-    const [confirmLoading, setConfirmLoading] = React.useState(false);
 
     const showModal = () => {
       setVisible(true);
     };
 
     const handleOk = () => {
-      setConfirmLoading(true);
       setVisible(false);
-      setConfirmLoading(false);
     };
 
     const handleCancel = () => {
@@ -37,10 +35,23 @@ const TodoItem: React.FC<TodoItemProps> = ({todoItem}) => {
         okType: 'danger',
         cancelText: 'No',
         onOk() {
-            const deleteTodoItem = axios.delete(backEndUrl + 'api/todo/tasks/delete/' + todoItem.id);
-            console.log(deleteTodoItem);
+            axios.delete(backEndUrl + 'api/todo/tasks/delete/' + todoItem.id);
         },
         onCancel() {}
+      });
+    }
+
+    const showExtended = () => {
+      Modal.info({
+        title: todoItem.assignee,
+        content: (
+          <div>
+            <p>{todoItem.text}</p>
+            <p>State: {stateNumToString(todoItem.state)}</p>
+            <p>Deadline: {todoItem.deadline}</p>
+          </div>
+        ),
+        onOk() {},
       });
     }
 
@@ -52,11 +63,12 @@ const TodoItem: React.FC<TodoItemProps> = ({todoItem}) => {
                 </div>
                 <span className='deadline-span'>Deadline: {todoItem.deadline}</span>
                 <div className='buttons'>
+                    <Button className='more-btn' size='small' type='dashed' onClick={showExtended}>More</Button>
                     <Button className='edit-btn' size='small' type='primary' onClick={showModal}>Edit</Button>
                     <Button className='delete-btn' type='primary' danger size='small' onClick={showDeleteConfirm}>Delete</Button>
                 </div>
             </Card>
-            <Modal title="Edit Task" visible={visible} onOk={handleOk} confirmLoading={confirmLoading} onCancel={handleCancel} footer={[]}>
+            <Modal title="Edit Task" visible={visible} onOk={handleOk}onCancel={handleCancel} footer={[]}>
                 <EditTodoItemForm item={todoItem} />
             </Modal>
         </div>

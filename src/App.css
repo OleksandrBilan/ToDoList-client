@@ -18,13 +18,10 @@
 
 .buttons {
     float: right;
+    width: 21%;
     display: inline-flex;
     flex-direction: row;
-    justify-content: flex-end;
-}
-
-.delete-btn {
-    margin-left: 5%;
+    justify-content: space-between;
 }
 
 .assignee-span {

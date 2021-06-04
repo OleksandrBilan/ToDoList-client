@@ -6,9 +6,18 @@ import { ITodoItem } from '../types/types'
 import { backEndUrl } from '../App';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 interface EditTodoItemFormProps {
     item: ITodoItem;
+}
+
+export function stateNumToString(num: Int) {
+    switch(num) {
+        case 0: return "New";
+        case 1: return "Doing";
+        case 2: return "Done";
+    }
 }
 
 const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
@@ -61,14 +70,6 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
         }
     }
 
-    const stateNumToString = (num: Int) => {
-        switch(num) {
-            case 0: return "New";
-            case 1: return "Doing";
-            case 2: return "Done";
-        }
-    }
-
     return (
         <div>
             <Form form={form} onFinish={e => {onEditClick(e)}}>
@@ -76,7 +77,7 @@ const EditTodoItemForm: React.FC<EditTodoItemFormProps> = ({item}) => {
                     <Input onChange={e => setAssignee(e.target.value)} placeholder={item.assignee} />
                 </Form.Item>
                 <Form.Item name="text" label="Text" required={true}>
-                    <Input onChange={e => setText(e.target.value)} placeholder={item.text} />
+                    <TextArea rows={3} onChange={e => setText(e.target.value)} placeholder={item.text}/>
                 </Form.Item>
                 <Form.Item name="state" label="State" required={true}>
                     <Select onChange={e => onSelectChange(e?.toString())} placeholder={stateNumToString(item.state)}>

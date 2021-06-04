@@ -6,6 +6,7 @@ import { ITodoItem } from '../types/types'
 import { Int } from '../types/types';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const CreateTodoItemForm = () => {
     const [form] = Form.useForm();
@@ -56,7 +57,7 @@ const CreateTodoItemForm = () => {
                     <Input onChange={e => setAssignee(e.target.value)} />
                 </Form.Item>
                 <Form.Item name="text" label="Text" required={true}>
-                    <Input onChange={e => setText(e.target.value)} />
+                    <TextArea rows={3} onChange={e => setText(e.target.value)}/>
                 </Form.Item>
                 <Form.Item name="state" label="State" required={true}>
                     <Select placeholder="New" onSelect={onSelectChange}>
